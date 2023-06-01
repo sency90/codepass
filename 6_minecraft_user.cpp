@@ -34,11 +34,13 @@ int main() {
             }
         }
         if(B>=0) {
-            mnTime = min(mnTime, Time);
-            if(mnTime == Time) {
+            if(mnTime > Time) {
+                mnTime = Time;
+                memH = h;
+            }
+            else if(mnTime == Time) {
                 memH = max(memH, h);
             }
-            else memH = h;
         }
     }
 
