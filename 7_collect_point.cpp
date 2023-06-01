@@ -17,10 +17,10 @@ int main() {
         vx[v[i].x]++;
         vy[v[i].y]++;
     }
-    int midx, midy;
+    int midx, midy, M=(m+1)/2;
     for(int i=1; i<=10000; i++) {
         vx[i] += vx[i-1];
-        if(vx[i] >= m/2) {
+        if(vx[i] >= M) {
             midx = i;
             break;
         }
@@ -28,7 +28,7 @@ int main() {
 
     for(int i=1; i<=10000; i++) {
         vy[i] += vy[i-1];
-        if(vy[i] >= m/2) {
+        if(vy[i] >= M) {
             midy = i;
             break;
         }
