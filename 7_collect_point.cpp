@@ -1,43 +1,34 @@
 #include <stdio.h>
-struct Coord{
-    int x, y;
-    Coord() {}
-    Coord(int x, int y):x(x), y(y) {}
-};
-Coord v[10001];
-int vx[10001], vy[10001];
-inline int abs(int x) {
-    return x<0?-x:x;
+int vx[10001], vy[10001], tmp[10001];
+inline int abs(int x) { return x<0?-x:x; }
+void msort(int *v, int s, int e) {
+	if(s+1>=e) return;
+	int m = (s+e)>>1;
+	msort(v, s, m); msort(v, m, e);
+
+	int i=s, j=m, k=s;
+	while(i<m && j<e) {
+		if(v[i]<v[j]) tmp[k++]=v[i++];
+		else tmp[k++] = v[j++];
+	}
+	while(i<m) { tmp[k++] = v[i++]; }
+	while(j<e) { tmp[k++] = v[j++]; }
+
+	for(i=s; i<e; i++) v[i] = tmp[i];
 }
 int main() {
     int n, m;
     scanf("%d%d", &n,&m);
     for(int i=0; i<m; i++) {
-        scanf("%d%d",&v[i].x,&v[i].y);
-        vx[v[i].x]++;
-        vy[v[i].y]++;
+        scanf("%d%d",&vx[i],&vy[i]);
     }
-    int midx, midy, M=(m+1)/2;
-    for(int i=1; i<=10000; i++) {
-        vx[i] += vx[i-1];
-        if(vx[i] >= M) {
-            midx = i;
-            break;
-        }
-    }
+	msort(vx, 0, m);
+	msort(vy, 0, m);
 
-    for(int i=1; i<=10000; i++) {
-        vy[i] += vy[i-1];
-        if(vy[i] >= M) {
-            midy = i;
-            break;
-        }
-    }
-
-    int ans = 0;
+    int ans = 0, M=m>>1;
     for(int i=0; i<m; i++) {
-        ans += abs(v[i].x-midx);
-        ans += abs(v[i].y-midy);
+        ans += abs(vx[i]-vx[M]);
+        ans += abs(vy[i]-vy[M]);
     }
 
     printf("%d\n", ans);
