@@ -1,47 +1,55 @@
-#include <stdio.h>
-#define MAXD 11
-#define MAXN 50
-typedef unsigned long long ull;
-struct Cell{
-	ull x[2];
-	int bitcnt=0;
-	Cell() {x[0]=x[1]=0ULL;}
-	Cell(int (*p)[MAXD], int D) {
-		x[0]=x[1]=0ULL;
-		for(int i=0; i<D; i++) {
-			for(int j=0; j<D; j++) {
-				x[bitcnt>>6] <<= 1;
-				x[bitcnt>>6] |= (p[i][j]-1);
-				bitcnt++;
-			}
-		}
-	}
-	Cell(int N, int D, int (*map)[MAXN], int sx, int sy) {
-		for(int i=sx, n=0; n<D; i++, n++) {
-			if(i==N) i=0;
-			for(int j=sy, m=0; m<D; j++, m++) {
-				if(j==N) j=0;
-				x[bitcnt>>6] <<= 1;
-				x[bitcnt>>6] |= (map[i][j]-1);
-				bitcnt++;
-			}
-		}
-	}
-	inline bool operator==(const Cell & rhs) const {
-		return x[0]==rhs.x[0] && x[1]==rhs.x[1];
-	}
-	inline bool operator!=(const Cell & rhs) const {
-		return !(*this == rhs);
-	}
-	inline bool operator<(const Cell & rhs) const {
-		if(x[0] == rhs.x[0]) return x[1]<rhs.x[1];
-		else return x[0] < rhs.x[0];
-	}
-	inline bool operator>(const Cell & rhs) const {
-		if(x[0] == rhs.x[0]) return x[1]>rhs.x[1];
-		else return x[0] > rhs.x[0];
-	}
+#include <cstdio>
+using namespace std;
+int m[5][3] = {
+	{ 0,0,0 },
+	{ 1,2,3 },
+	{ 4,5,6 },
+	{ 7,8,9 },
+	{ 0,0,0 }
 };
 int main() {
+	int rx=2, ry=1;
+	for(int dir=0; dir<4; dir++) {
+		switch(dir) {
+			case 0:
+				for(int i=rx-1; i<=rx+1; i++) {
+					for(int j=ry-1; j<=ry+1; j++) {
+						printf("%d ", m[i][j]);
+					}
+					puts("");
+				}
+				puts("");
+				break;
+			case 1:
+				for(int i=ry-1; i<=ry+1; i++) {
+					for(int j=rx+1; j>=rx-1; j--) {
+						printf("%d ", m[j][i]);
+					}
+					puts("");
+				}
+				puts("");
+				break;
+			case 2:
+				for(int i=rx+1; i>=rx-1; i--) {
+					for(int j=ry+1; j>=ry-1; j--) {
+						printf("%d ", m[i][j]);
+					}
+					puts("");
+				}
+				puts("");
+				break;
+			case 3:
+				for(int i=ry+1; i>=ry-1; i--) {
+					for(int j=rx-1; j<=rx+1; j++) {
+						printf("%d ", m[j][i]);
+					}
+					puts("");
+				}
+				puts("");
+				break;
+			default:
+				break;
+		}
+	}
 	return 0;
 }
