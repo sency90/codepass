@@ -28,7 +28,7 @@ static const int SCAN_COST = 20;
  
 static const long long PENALTY = 1000000000;
  
-static const int dy[4] = { -1,    0, 1, 0 };
+static const int dy[4] = { -1, 0, 1, 0 };
 static const int dx[4] = { 0, -1, 0, 1 };
  
 static int houseInfo[N][N];
@@ -132,7 +132,7 @@ static bool run()
 int main()
 {
     setbuf(stdout, NULL);
-    //freopen("input.txt", "r", stdin);
+    freopen("33_robot_cleaner4_input.txt", "r", stdin);
  
     for (int tc = 1; tc <= TC_COUNT; ++tc)
         if (run() == false)
