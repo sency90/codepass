@@ -122,6 +122,7 @@ static bool run()
         for (int y = 1; y < N - 1; ++y)
             for (int x = 1; x < N - 1; ++x)
                 if (houseInfo[y][x] == 0 && isCleaned[y][x] == 0) {
+					printf("(%d,%d)\n", y,x);
                     return false;
                 }
     }
