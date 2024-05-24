@@ -214,41 +214,11 @@ void cleanHouse(void)
 	//	}
 	//}
 
-#if 0 //DEBUG
-	for(int i=0; i<131; i++) {
-		for(int j=0; j<131; j++) {
-			if(m[i][j]>=0) {
-				sx = min(sx,i);
-				ex = max(ex,i+1);
-				sy = min(sy,j);
-				ey = max(ey,j+1);
-			}
-		}
-	}
-
-	puts("1");
-	for(int i=sx; i<ex; i++) {
-		for(int j=sy; j<ey; j++) {
-			if(i==64 && j==64) printf("*");
-			else if(chk[i][j]==0) {
-				if(m[i][j]<0) printf("?");
-				else if(m[i][j]==0) printf(".");
-				else if(m[i][j]==2) printf("_");
-				else printf("#");
-			}
-			else printf("%X", chk[i][j]);
-		}
-		puts("");
-	}
-	puts("");
-	printf("* -> %X\n", chk[64][64]);
-#endif
 
 	cx=rx, cy=ry, cdir=rdir;
 	dfs(rx,ry,rdir);
 
 #if 1 //DEBUG
-	//puts("2");
 	for(int i=0; i<131; i++) {
 		for(int j=0; j<131; j++) {
 			if(i==64 && j==64) printf("*");
