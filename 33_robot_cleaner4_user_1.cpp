@@ -78,19 +78,30 @@ void DrawMap(int (*fs)[3]) {
 }
 
 bool Move() {
-	for(int i=rdir, j=0; j<4; j++, i=(i+1)%4) {
-		int nx=rx+dx[i], ny=ry+dy[i];
-		if(m[nx][ny]<0) {
-			//scan(fs);
-			//DrawMap(fs);
-			continue;
+	int nx=rx+dx[rdir], ny=ry+dy[rdir];	
+	if(m[nx][ny]<=0) {
+		int ret = move();
+		if(ret) {
+			rx=nx, ry=ny;
+			m[rx][ry]=2;
+			return true;
 		}
-		else if(m[nx][ny]==0) {
+		else m[nx][ny]=1;
+	}
+	for(int i=(rdir+1)%4, j=0; j<3; j++, i=(i+1)%4) {
+		int nx=rx+dx[i], ny=ry+dy[i];
+		//if(m[nx][ny]<0) {
+		//	//scan(fs);
+		//	//DrawMap(fs);
+		//	continue;
+		//}
+		//else 
+		if(m[nx][ny]<=0) {
 			if(i != rdir) {
 				turn((i-rdir+4)%4);
 				rdir = i;
 			}
-			assert(move());
+			move();
 			rx=nx, ry=ny;
 			m[rx][ry]=2;
 			return true;
@@ -115,7 +126,7 @@ Coord pco[131][131];
 Coord need_scan_co, dest_co;
 //int debug_cnt;
 bool FindUncleanedPlace() {
-		//debug_cnt++;
+	//debug_cnt++;
 	while(!q.empty()) q.pop();
 	need_scan_co = Coord(-1,-1);
 	dest_co = Coord(-1,-1);
