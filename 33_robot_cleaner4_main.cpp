@@ -1,4 +1,3 @@
-//EX 230729
 /// ***** main.cpp *****
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
@@ -28,7 +27,7 @@ static const int SCAN_COST = 20;
  
 static const long long PENALTY = 1000000000;
  
-static const int dy[4] = { -1, 0, 1, 0 };
+static const int dy[4] = { -1,    0, 1, 0 };
 static const int dx[4] = { 0, -1, 0, 1 };
  
 static int houseInfo[N][N];
@@ -122,7 +121,6 @@ static bool run()
         for (int y = 1; y < N - 1; ++y)
             for (int x = 1; x < N - 1; ++x)
                 if (houseInfo[y][x] == 0 && isCleaned[y][x] == 0) {
-					printf("(%d,%d)\n", y,x);
                     return false;
                 }
     }
@@ -133,7 +131,7 @@ static bool run()
 int main()
 {
     setbuf(stdout, NULL);
-    freopen("33_robot_cleaner4_input.txt", "r", stdin);
+    freopen("in.txt", "r", stdin);
  
     for (int tc = 1; tc <= TC_COUNT; ++tc)
         if (run() == false)
