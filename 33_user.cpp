@@ -26,14 +26,14 @@ void init(void) {
 		rev_dir[dx[i]+1][dy[i]+1] = i;
 	}
 }
-int UnidentifiedCnt() {
+bool HasBeen() {
 	int cnt=0;
 	for(int i=-1; i<=1; i++) {
 		for(int j=-1; j<=1; j++) {
-			if(m[cx+i][cy+j]<0) cnt++;
+			if(m[cx+i][cy+j]<0) return false;
 		}
 	}
-	return cnt;
+	return true;
 }
 void DrawMap(int (*fs)[3]) {
 	switch(cdir) {
@@ -138,10 +138,10 @@ void Go(int tx, int ty) {
 	cx=tx; cy=ty;
 	m[cx][cy]=2;
 
-	//if(!UnidentifiedCnt()) {
-	//	scan(fs);
-	//	DrawMap(fs);
-	//}
+	if(!HasBeen()) {
+		scan(fs);
+		DrawMap(fs);
+	}
 }
 
 void cleanHouse(void) {
@@ -156,25 +156,25 @@ void cleanHouse(void) {
 	m[cx][cy]=2;
 
 	while(true) {
-		if(move()) {
-			cx+=dx[cdir];
-			cy+=dy[cdir];
-			m[cx][cy]=2;
-			if(UnidentifiedCnt()>=5) {
-				scan(fs);
-				DrawMap(fs);
-			}
-			continue;
-		}
-		else {
-			m[cx+dx[cdir]][cy+dy[cdir]]=1;
-			scan(fs);
-			DrawMap(fs);
-		}
-		//if(!UnidentifiedCnt()) {
+		//if(move()) {
+		//	cx+=dx[cdir];
+		//	cy+=dy[cdir];
+		//	m[cx][cy]=2;
+		//	if(UnidentifiedCnt()>=5) {
+		//		scan(fs);
+		//		DrawMap(fs);
+		//	}
+		//	continue;
+		//}
+		//else {
+		//	m[cx+dx[cdir]][cy+dy[cdir]]=1;
 		//	scan(fs);
 		//	DrawMap(fs);
 		//}
+		if(!HasBeen()) {
+			scan(fs);
+			DrawMap(fs);
+		}
 
 		bool did_go = false;
 		for(int i=0; i<4; i++) {
@@ -225,7 +225,7 @@ void cleanHouse(void) {
 #endif
 	}
 
-#if 1
+#if 0
 	for(int i=55,u=0; u<66; i++,u++) {
 		for(int j=63,v=0; v<66; j++,v++) {
 			if(m[i][j]<0) printf("?");
