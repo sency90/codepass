@@ -89,11 +89,9 @@ struct PQ{
 	bool empty() { return sz==0; }
 
 	void push(const Info & info) {
-		sz++;
-		int i=sz;
-		for(; i>1; i>>=1) {
-			if(arr[i>>1] > arr[i]) arr[i] = arr[i>>1];
-			else break;
+		int i=++sz;
+		for(; i>1 && arr[i]<arr[i>>1]; i>>=1) {
+			arr[i] = arr[i>>1];
 		}
 		arr[i] = info;
 	}
@@ -102,16 +100,18 @@ struct PQ{
 		return arr[1];
 	}
 	void pop() {
-		int i=1;
-		if(sz!=1) arr[1] = arr[sz--];
-		for(; i<sz; i<<=1) {
-
+		int i=2;
+		const Info &info = arr[sz--];
+		for(; i<=sz; i<<=1) { //i, i<<1, (i<<1)+1
+			if(i+1<=sz && arr[i+1]<arr[i]) i++;
+			if(arr[i] < info) arr[i>>1]=arr[i];
+			else break;
 		}
+		if(sz) arr[i>>1] = info;
 	}
-
 };
-PQ pq;
-priority_queue<Info, vector<Info>, greater<Info>> mnh;
+PQ mnh;
+//priority_queue<Info, vector<Info>, greater<Info>> mnh;
 //priority_queue<Info> mnh;
 
 struct Coord{
@@ -199,7 +199,7 @@ void cleanHouse(void) {
 				m[nx][ny] = 2;
 
 				if(ndir != cdir) {
-					turn((ndir-cdir+4)%4);
+					turn(i);
 					cdir = ndir;
 				}
 				move();
@@ -211,16 +211,10 @@ void cleanHouse(void) {
 
 		if(!did_go) {
 			int tx,ty;
-			while(!mnh.empty()) mnh.pop();
-			if(FindTarget(tx,ty)) {
-				Go(tx,ty);
-			}
-			else {
-				//FindTarget2(tx,ty);
-				break;
-			}
+			mnh.clear();
+			if(FindTarget(tx,ty)) Go(tx,ty);
+			else break;
 
 		}
-
 	}
 }
