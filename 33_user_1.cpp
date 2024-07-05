@@ -90,7 +90,7 @@ struct PQ{
 
 	void push(const Info & info) {
 		int i=++sz;
-		for(; i>1 && arr[i]<arr[i>>1]; i>>=1) {
+		for(; i>1 && info<arr[i>>1]; i>>=1) {
 			arr[i] = arr[i>>1];
 		}
 		arr[i] = info;
